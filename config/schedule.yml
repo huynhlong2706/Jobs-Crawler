@@ -1,0 +1,5 @@
+crawl_vietnamworks_daily:
+  cron: "0 0 * * *" 
+  class: "CrawlJobsJob"
+  args:
+    - 5
