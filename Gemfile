@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-
+gem 'slim-rails'
 # Crawler
 gem 'nokogiri'
 gem 'httparty' 
@@ -11,10 +11,6 @@ gem 'kaminari'
 # Background Jobs
 gem 'sidekiq'
 gem 'sidekiq-cron'
-
-# Admin
-gem 'activeadmin'
-gem 'devise'
 
 # Env
 gem 'dotenv-rails', groups: [:development, :test]

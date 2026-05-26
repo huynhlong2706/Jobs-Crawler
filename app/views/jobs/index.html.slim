@@ -1,0 +1,39 @@
+div style="max-width: 1000px; margin: 0 auto; padding: 20px; font-family: sans-serif;"
+  h1 style="color: #e8002d;" Danh sách Việc làm (VietnamWorks)
+  p
+    | Tổng cộng: 
+    strong = @jobs.total_count
+    |  việc làm đang mở.
+
+  / Form Tìm kiếm & Lọc
+  div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px;"
+    = form_with url: jobs_path, method: :get, local: true do |f|
+      div style="display: flex; gap: 10px;"
+        = f.text_field :q, value: params[:q], placeholder: "Tìm theo tên công việc (VD: Kế toán)...", style: "flex: 1; padding: 8px;"
+        
+        = f.select :location, options_for_select([['Tất cả địa điểm', '']] + @locations.map { |l| [l, l] }, params[:location]), {}, { style: "padding: 8px;" }
+        
+        = f.submit "Tìm kiếm", style: "padding: 8px 16px; background: #e8002d; color: white; border: none; cursor: pointer;"
+        
+        - if params[:q].present? || params[:location].present?
+          = link_to "Xóa bộ lọc", jobs_path, style: "padding: 8px 16px; text-decoration: none; color: #333; background: #ddd;"
+
+  / Danh sách Job Cards
+  - if @jobs.empty?
+    p style="text-align: center; color: #888;" Không tìm thấy công việc nào phù hợp.
+  - else
+    - @jobs.each do |job|
+      div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;"
+        h3 style="margin: 0 0 10px 0;"
+          a href=job.job_url target="_blank" style="color: #0056b3; text-decoration: none;" = job.title
+        
+        p style="margin: 5px 0; font-weight: bold;" = job.company_name
+        
+        div style="display: flex; gap: 20px; color: #555; font-size: 14px; margin-top: 10px;"
+          span = "📍 #{job.location}"
+          span style="color: #28a745; font-weight: bold;" = "💰 #{job.salary}"
+          span = "⏰ Đăng lúc: #{job.posted_at.strftime('%d/%m/%Y')}"
+
+  / Thanh phân trang Kaminari
+  div style="margin-top: 20px; text-align: center;"
+    = paginate @jobs
