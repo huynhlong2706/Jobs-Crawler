@@ -1,4 +1,6 @@
 source "https://rubygems.org"
+gem 'elasticsearch'
+gem 'searchkick'
 gem 'slim-rails'
 # Crawler
 gem 'nokogiri'

@@ -4,7 +4,13 @@ class Job < ApplicationRecord
   validates :company_name, presence: true
   validates :job_url, presence: true, uniqueness: true
 
-  scope :search_by_title,    ->(q)   { where("title LIKE ?", "%#{q}%") if q.present? }
-  scope :filter_by_location, ->(loc) { where("location LIKE ?", "%#{loc}%") if loc.present? }
-  scope :newest,             ->      { order(posted_at: :desc) }
+  searchkick synonyms: [["ror", "ruby on rails", "ruby"]]
+
+  def search_data
+    {
+      title: title,
+      location: location,
+      posted_at: posted_at
+    }
+  end
 end

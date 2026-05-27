@@ -1,12 +1,19 @@
 class JobsController < ApplicationController
   def index
-    @jobs = Job.all
-    @jobs = @jobs.search_by_title(params[:q])
-    @jobs = @jobs.filter_by_location(params[:location])
-    @jobs = @jobs.newest
-    @jobs = @jobs.page(params[:page]).per(20)
-
     @locations = Job.distinct.pluck(:location).compact.reject(&:empty?).sort
+
+    query = params[:q].presence || "*"
+    
+    conditions = {}
+    conditions[:location] = params[:location] if params[:location].present?
+
+    @jobs = Job.search(
+      query,
+      where: conditions,
+      order: { posted_at: :desc },
+      page: params[:page],
+      per_page: 20
+    )
   end
 
   def show

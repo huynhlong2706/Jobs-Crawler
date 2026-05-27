@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  elasticsearch:
+    image: elasticsearch:7.17.10
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" 
+    ports:
+      - "9200:9200"
+
+  web:
+    build: .
+    ports:
+      - "3000:80" 
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - RAILS_ENV=development 
+      - REDIS_URL=redis://redis:6379/1
+      - DATABASE_HOST=db
+      - DATABASE_PASSWORD=password123
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      - RAILS_ENV=development
+      - REDIS_URL=redis://redis:6379/1
+      - DATABASE_HOST=db
+      - DATABASE_PASSWORD=password123
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+
+volumes:
+  mysql_data:

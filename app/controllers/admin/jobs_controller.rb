@@ -1,7 +1,7 @@
 class Admin::JobsController < ApplicationController
     before_action :require_admin
     def index
-        @jobs = Job.newest.page(params[:page]).per(20)
+        @jobs = Job.order(posted_at: :desc).page(params[:page]).per(20)
     end
 
     def edit
