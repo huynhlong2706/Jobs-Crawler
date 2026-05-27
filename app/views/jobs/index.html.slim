@@ -1,5 +1,9 @@
 div style="max-width: 1000px; margin: 0 auto; padding: 20px; font-family: sans-serif;"
-  h1 style="color: #e8002d;" Danh sách Việc làm (VietnamWorks)
+  / Header với Tiêu đề và Nút Đăng nhập
+  div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;"
+    h1 style="color: #e8002d; margin: 0;" Danh sách Việc làm (VietnamWorks)
+    = link_to "Đăng nhập Admin", admin_root_path, style: "background-color: #0056b3; color: white; padding: 10px 18px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+
   p
     | Tổng cộng: 
     strong = @jobs.total_count
@@ -16,7 +20,7 @@ div style="max-width: 1000px; margin: 0 auto; padding: 20px; font-family: sans-s
         = f.submit "Tìm kiếm", style: "padding: 8px 16px; background: #e8002d; color: white; border: none; cursor: pointer;"
         
         - if params[:q].present? || params[:location].present?
-          = link_to "Xóa bộ lọc", jobs_path, style: "padding: 8px 16px; text-decoration: none; color: #333; background: #ddd;"
+          = link_to "Xóa bộ lọc", jobs_path, style: "padding: 8px 16px; text-decoration: none; color: #333; background: #ddd; display: flex; align-items: center;"
 
   / Danh sách Job Cards
   - if @jobs.empty?

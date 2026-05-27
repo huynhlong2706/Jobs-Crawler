@@ -1,0 +1,24 @@
+.form-container style="max-width: 600px; margin: 50px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; font-family: sans-serif;"
+  h2 Chỉnh sửa Việc làm
+  hr
+  
+  = form_with model: [:admin, @job], local: true do |f|
+    .field style="margin-bottom: 15px;"
+      = f.label :title, "Tiêu đề công việc", style: "display: block; margin-bottom: 5px; font-weight: bold;"
+      = f.text_field :title, style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"
+    
+    .field style="margin-bottom: 15px;"
+      = f.label :company_name, "Tên công ty", style: "display: block; margin-bottom: 5px; font-weight: bold;"
+      = f.text_field :company_name, style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"
+
+    .field style="margin-bottom: 15px;"
+      = f.label :salary, "Mức lương", style: "display: block; margin-bottom: 5px; font-weight: bold;"
+      = f.text_field :salary, style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"
+
+    .field style="margin-bottom: 15px;"
+      = f.label :location, "Địa điểm", style: "display: block; margin-bottom: 5px; font-weight: bold;"
+      = f.text_field :location, style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"
+
+    .actions style="margin-top: 25px; display: flex; gap: 15px;"
+      = f.submit "Cập nhật", style: "background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;"
+      = link_to "Hủy bỏ", admin_jobs_path, style: "background: #6c757d; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px; font-size: 14px;"

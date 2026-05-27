@@ -1,0 +1,19 @@
+div style="max-width: 400px; margin: 80px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); font-family: sans-serif; background: white;"
+  h2 style="text-align: center; margin-top: 0; color: #333;" Đăng Nhập Hệ Thống
+
+  - if flash[:alert]
+    p style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; text-align: center;" = flash[:alert]
+
+  = form_with url: admin_login_path, local: true do |f|
+    div style="margin-bottom: 20px;"
+      = f.label :username, "Tài khoản", style: "display: block; font-weight: bold; margin-bottom: 5px;"
+      = f.text_field :username, style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"
+    
+    div style="margin-bottom: 25px;"
+      = f.label :password, "Mật khẩu", style: "display: block; font-weight: bold; margin-bottom: 5px;"
+      = f.password_field :password, style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"
+    
+    = f.submit "Đăng nhập", style: "width: 100%; padding: 12px; background: #0056b3; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;"
+    
+  div style="text-align: center; margin-top: 15px;"
+    = link_to "← Trở về Trang chủ", root_path, style: "color: #6c757d; text-decoration: none; font-size: 14px;"
